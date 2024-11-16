@@ -23,3 +23,21 @@ char** splitArguments(char *line) {
 
         return arguments;
 }
+
+
+char** splitCommandsInLine(char *line) {
+        // Reset the index
+        int i = 0;
+        char **commands = malloc(512 * sizeof(char*));
+
+        // Seperate the command and the arguments entered
+        // by the user
+        char *cmd = strtok(line, ";");
+        while(cmd != NULL) {
+            commands[i++] = cmd;
+            cmd = strtok(NULL, ";");
+        }
+        commands[i] = NULL;
+
+        return commands;
+}
