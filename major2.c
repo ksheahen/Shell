@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <sys/types.h> 
 #include <sys/wait.h>
-// #include "major2.h"
+#include "major2.h"
 
 //int argc - number of arguments
 //argv - argument vector
@@ -36,8 +36,7 @@ int main(int argc, char *argv[]) {
 
             printf("%s\n", line);
 
-            // Seperate the command and the arguments entered
-            // by the user
+            // Seperate the commands entered by the user
             i = 0;
             char *token = strtok(line, ";");
             while(token != NULL) {
@@ -70,10 +69,10 @@ int main(int argc, char *argv[]) {
     } else if (argc == 1) {
         //interactive
         printf("interactive mode\n");
-        // interactive();
+        interactive();
     } else {
         //error
-        printf("error\n");
+        printf("Error: Too many arguments entered.\n");
     }
 
   return 0;
