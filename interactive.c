@@ -80,28 +80,31 @@ void interactive() {
 
             // Seperate the command and the arguments entered
             // by the user
-            char *token = strtok(input, " ");
-            while(token != NULL) {
-                cmd[i++] = token;
-                token = strtok(NULL, " ");
-            }
-            cmd[i] = NULL; 
+            // char *token = strtok(input, " ");
+            // while(token != NULL) {
+            //     cmd[i++] = token;
+            //     token = strtok(NULL, " ");
+            // }
+            // cmd[i] = NULL; 
+
+            // splitCommandsInLine(input);
+
             // OTHER COMMANDS
-            printf("other cmds"); //debug
-            if(fork() == 0) {
+            // printf("other cmds"); //debug
+            // if(fork() == 0) {
 
-            // If the user input is not valid,
-            // print command not found
-            if (execvp(cmd[0], cmd) == -1) {
-                printf("%s: command not found\n", cmd[0]);
-                exit(1);
-            }
+            // // If the user input is not valid,
+            // // print command not found
+            // if (execvp(cmd[0], cmd) == -1) {
+            //     printf("%s: command not found\n", cmd[0]);
+            //     exit(1);
+            // }
 
-            // Parent
-            } else {
-                // Wait for the child process to finish
-                wait((int *)0);
-            }
+            // // Parent
+            // } else {
+            //     // Wait for the child process to finish
+            //     wait((int *)0);
+            // }
         }
     }
 }
