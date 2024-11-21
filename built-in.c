@@ -36,7 +36,7 @@ int builtInCommands(char *input) {
     }
     printf("path: %s\n", path); //debug
 
-    if (s == NULL) {
+    if (s == NULL || path == NULL) {
         printf("error allocating memory");
         exit(0);
     }
@@ -48,30 +48,26 @@ int builtInCommands(char *input) {
         return -1;
         
     } else if (strcmp(input, "cd") == 0) {
+
+        // KNOWN BUGS: cut-off for arguments if its long enough
+
         // If the user input is "cd", change the directory.
         printf("cd\n");
         printf("old path: %s\n", getcwd(s, 100)); //100 should be the size of the buffer
 
-        // ".." sends the director back by 2 for some stupid fking reason
-        // THIS FUCKING BREAKS IT????
-
-        // implement some sort of error checking
-
-        // if(chdir(path) == -1 && strcmp(path, "") != 0) {
-        //     printf("Error changing directory\n");
-        //     return -1;
-        // }
-
-        // If no path is specified, go back to the previous directory
-        // I think this is intended to go back to the "home" directory but will leave it for rn
+        // If no path is specified, go to the user's home directory
         if (strcmp(path, "") == 0) {
-            chdir("/mnt/c/users/kathryn sheahen/desktop"); //placeholder for now
-            printf("new path: %s\n", getcwd(s, 100));
+            chdir(getenv("HOME"));
+            printf("new path: %s\n", getcwd(s, 100)); //debug
             return -1;
         } else {
-            chdir(path); //change path
-            printf("new path: %s\n", getcwd(s, 100));
-            return -1;
+            if (chdir(path) == 0) { //change path
+                printf("new path: %s\n", getcwd(s, 100)); //debug
+                return -1;
+            } else {
+                printf("error");
+                return -1;
+            }
         }
 
     } else if (strcmp(input, "path") == 0) {
