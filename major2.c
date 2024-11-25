@@ -16,6 +16,8 @@ int main(int argc, char *argv[]) {
     char line[512];
     int i = 0;
     char *cmd[512];         //linux commands
+    char **commands;
+    char **arguments;
 
     if (argc == 2) {
         //batch mode
@@ -37,34 +39,19 @@ int main(int argc, char *argv[]) {
             printf("%s\n", line);
 
             // Seperate the commands entered by the user
+            commands = splitCommandsInLine(line);
             i = 0;
-            char *token = strtok(line, ";");
-            while(token != NULL) {
-                cmd[i++] = token;
-                token = strtok(NULL, ";");
-            }
-            cmd[i] = NULL;
 
-
-            if(fork() == 0) {
-
-                // If the user input is not valid,
-                // print command not found
-                if (execvp(cmd[0], cmd) == -1) {
-                    printf("%s: command not found\n", cmd[0]);
-                    exit(1);
-                }
-
-            // Parent
-            } else {
-                // Wait for the child process to finish
-                wait((int *)0);
+            // Call the runCommands function for each command
+            while (commands[i] != NULL) {
+                // printf("command: %s\n", commands[i]); //debug
+                runCommands(commands[i]);
+                i++;
             }
 
         }
 
-
-        fclose(file);
+        fclose(file); // close the file
 
     } else if (argc == 1) {
         //interactive

@@ -1,20 +1,39 @@
 #include "major2.h"
-#include <stdio.h>
-#include <stdbool.h> 
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/types.h> 
-#include <sys/wait.h>
 
+// Split commands entered by the user (;)
 char** splitCommandsInLine(char* input) {
-    char** cmd = malloc(100 * sizeof(char*));
+    char** cmds = malloc(100 * sizeof(char*));
     int i = 0;
+
+    if (!cmds) {
+        fprintf(stderr, "Memory allocation error\n");
+        exit(1);
+    }
+
     char* token = strtok(input, ";");
     while(token != NULL) {
-        cmd[i++] = token;
+        cmds[i++] = token;
         token = strtok(NULL, ";");
     }
-    cmd[i] = NULL; 
-    return cmd;
+    cmds[i] = NULL; 
+    return cmds;
+}
+
+// Split the commands into its respective arguments
+char** splitCommandsInArguments(char* input) {
+    char** arguments = malloc(100 * sizeof(char*));
+    int i = 0;
+
+    if (!arguments) {
+        fprintf(stderr, "Memory allocation error\n");
+        exit(1);
+    }
+
+    char* token = strtok(input, " ");
+    while(token != NULL) {
+        arguments[i++] = token;
+        token = strtok(NULL, " ");
+    }
+    arguments[i] = NULL; 
+    return arguments;
 }
