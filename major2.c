@@ -1,21 +1,10 @@
-
-#include <stdio.h>
-#include <stdbool.h> 
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/types.h> 
-#include <sys/wait.h>
 #include "major2.h"
-
-//int argc - number of arguments
-//argv - argument vector
 
 int main(int argc, char *argv[]) {
 
     char line[512];
     int i = 0;
-    char *cmd[512];         //linux commands
+    char *cmd[512];         
     char **commands;
     char **arguments;
 

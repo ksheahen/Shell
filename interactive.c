@@ -1,11 +1,3 @@
-
-#include <stdio.h>
-#include <stdbool.h> 
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/types.h> 
-#include <sys/wait.h>
 #include "major2.h"
 
 void interactive() {
@@ -13,14 +5,14 @@ void interactive() {
     char *cmd[512];         //linux commands
     char input[512];         //user input
     int i = 0;              //index
-     char *cwd = (char *)malloc(100 * sizeof(char)); //cwd
+    char *cwd = (char *)malloc(100 * sizeof(char)); //cwd
+    char *user = getenv("USER");
 
 
     while (running) {
 
-        //commenting this out for now idk if they want the cwd printed each time
-        //getcwd(cwd, 100); // Get the user's current working directory
-        printf("\n$ ");
+        getcwd(cwd, 100); // Get the user's current working directory
+        printf("\n%s:%s$ ", user,cwd); // USERNAME:path$
         fflush(stdout);
         fgets(input, sizeof(input), stdin);
 
@@ -34,9 +26,20 @@ void interactive() {
             break;
         }
 
-        if (builtInCommands(input) == -1) {
-            continue; 
-        } 
+        char **commands;
+        char **arguments;
+        int i = 0;
+
+        // Seperate the commands entered by the user
+        commands = splitCommandsInLine(input);
+        i = 0;
+
+        // Call the runCommands function for each command
+        while (commands[i] != NULL) {
+            printf("command: %s\n", commands[i]); //debug
+            runCommands(commands[i]);
+            i++;
+        }
         
     }
 }

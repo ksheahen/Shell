@@ -2,3 +2,4 @@ ls; whoami;
 date;
 whoami;
 ls -a -t;
+exit;

@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 
 void interactive();
-int builtInCommands(char *cmd);
+// int builtInCommands(char *cmd);
 char **splitCommandsInLine(char *input);
 char **splitCommandsInArguments(char *input);
 int runCommands(char* command);
