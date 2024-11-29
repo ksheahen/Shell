@@ -13,19 +13,34 @@ int builtInCommands(char *input) {
     char *cmd[100];         //linux commands
     char *path = (char *)malloc(100 * sizeof(char));
 
+    char **commands;
+    char **arguments;
+
     int i = 0;
-    char *token = strtok(input, " ");
-    while(token != NULL) {
-        cmd[i++] = token;
-        token = strtok(NULL, " ");
+    // char *token = strtok(input, " ");
+    // while(token != NULL) {
+    //     cmd[i++] = token;
+    //     token = strtok(NULL, " ");
+    // }
+    // cmd[i] = NULL; 
+
+    // Seperate the commands entered by the user
+    commands = splitCommandsInLine(input);
+    i = 0;
+
+    // Call the runCommands function for each command
+    while (commands[i] != NULL) {
+        // printf("command: %s\n", commands[i]); //debug
+        runCommands(commands[i]);
+        // arguments = splitCommandsInArguments(commands[i]);
+        i++;
     }
-    cmd[i] = NULL; 
 
     // Create path
     // CD: DOESNT WORK ENCLOSED WITH QUOTES OR WITH / at the first char
     i=1;
-    while(cmd[i] != NULL) {
-        strcat(path, cmd[i]);
+    while(arguments[i] != NULL) {
+        strcat(path, arguments[i]);
         strcat(path, " ");
         i++;
     }
