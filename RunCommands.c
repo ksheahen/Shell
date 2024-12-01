@@ -2,13 +2,17 @@
 
 int runCommands(char* command) {
 
+    // flags
     int isInput = -1;
     int isOutput = -1;
+    int isPipe = -1;
 
     if (strstr(command, "<") != NULL) {
         isInput = 1;
     } else if (strstr(command, ">") != NULL) {
         isOutput = 1;
+    } else if (strstr(command, "|") != NULL) {
+        isPipe = 1;
     }
 
     if (isInput == 1 || isOutput == 1) {
@@ -16,13 +20,23 @@ int runCommands(char* command) {
         if (redirection(command, isInput, isOutput) == -1) {
             printf("Error executing redirection\n");
             return -1;
+        } else {
+            return 0;
         }
 
-    } 
+    } else if (isPipe == 1) {
+        if (pipeline(command) == -1) {
+            printf("Error executing pipeline\n");
+            return -1;
+        } else {
+            return 0;
+        }
+    }
     
     char **commandArgs = splitCommandsInArguments(command);
     char *path = (char *)malloc(100 * sizeof(char));
-    char *s = (char *)malloc(100 * sizeof(char));
+    path[0] = '\0';
+    // char *s = (char *)malloc(100 * sizeof(char));
     int i=1;
 
     while(commandArgs[i] != NULL) {
@@ -49,22 +63,18 @@ int runCommands(char* command) {
             return -1;
         } else {
 
-            //fixes weird bug with it only working sometimes
-            if (strcmp(path, "..") == 0) {
-                chdir("..");
-                return -1;
-            }
-
-            else if (chdir(path) == 0) { //change path
+            if (chdir(path) == 0) { //change path
                 // printf("new path: %s\n", getcwd(s, 100)); //debug
+                free(path);
                 return -1;
             } else {
-                printf("Error: invalid directory");
+                printf("Error: invalid directory\n");
+                free(path);
                 return -1;
             }
         }
     } else if (strcmp(command, "exit") == 0) {
-        printf("exiting...\n"); //debug
+        // printf("exiting...\n"); //debug
         exit(1);
     } else if (strcmp(command, "path") == 0) {
         printf("path");
@@ -87,7 +97,7 @@ int runCommands(char* command) {
         }
     }
     
-    free(s);
+    // free(s);
     free(path);
 }
 
@@ -109,11 +119,6 @@ int redirection(char* command, int isInputRedirection, int isOutputRedirection) 
         redirectionArguments = SplitCommandsWithInputRedirection(command);
         ifp = open(redirectionArguments[1], O_RDONLY);
 
-        if (ifp == -1) {
-            printf("Error opening input file\n");
-            return -1;
-        }
-
         dup2(ifp, STDIN_FILENO);
         close(ifp);
 
@@ -134,6 +139,7 @@ int redirection(char* command, int isInputRedirection, int isOutputRedirection) 
             // Wait for the child process to finish
             wait((int *)0);
         }
+
     } 
     
     
@@ -161,6 +167,7 @@ int redirection(char* command, int isInputRedirection, int isOutputRedirection) 
         } else {
             // Wait for the child process to finish
             wait((int *)0);
+            
         }
         
     }
@@ -177,7 +184,12 @@ int redirection(char* command, int isInputRedirection, int isOutputRedirection) 
 }
 
 
-// Pipelining
+// Pipes
+int pipeline(char* command) {
+
+
+    return 0;
+}
 
 
 

@@ -7,9 +7,6 @@ void interactive() {
     int i = 0;              //index
     char *cwd = (char *)malloc(100 * sizeof(char)); //cwd
     char *user = getenv("USER");
-    char *history[20] = {NULL};
-    int counter = 0;
-
 
     while (running) {
 
@@ -27,25 +24,6 @@ void interactive() {
             running = false; 
             break;
         }
-
-
-        // if (counter < 20) {
-        //     history[counter] = input;
-        //     counter++;
-
-        //     for(int i =0; i < 19; i++) {
-        //         printf("%s, ", history[i]);
-        //     }
-        // } else {
-        //     for (int i = 20 - 1; i > 0; i--) {
-        //         history[i] = history[i - 1];
-        //     }
-            
-        //     // Insert the latest command at the front
-        //     history[0] = input;
-        // }
-
-
 
         char **commands;
         char **arguments;

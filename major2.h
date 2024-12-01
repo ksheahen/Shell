@@ -12,11 +12,13 @@
 #include <fcntl.h>
 
 void interactive();
-char **splitCommandsInLine(char *input);
-char **splitCommandsInArguments(char *input);
 int runCommands(char* command);
 int redirection(char* command, int isInputRedirection, int isOutputRedirection);
+int pipeline(char* command);
+char **splitCommandsInLine(char *input);
+char **splitCommandsInArguments(char *input);
 char **SplitCommandsWithInputRedirection(char* input);
 char **SplitCommandsWithOutputRedirection(char* input);
+char **SplitCommandsWithPipes(char* input);
 
 #endif

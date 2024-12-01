@@ -58,7 +58,7 @@ char** SplitCommandsWithInputRedirection(char* input) {
 }
 
 // Split the commands and text for otput direction (>)
-char**  SplitCommandsWithOutputRedirection(char* input) {
+char** SplitCommandsWithOutputRedirection(char* input) {
     char** arguments = malloc(100 * sizeof(char*));
     int i = 0;
 
@@ -71,6 +71,25 @@ char**  SplitCommandsWithOutputRedirection(char* input) {
     while(token != NULL) {
         arguments[i++] = token;
         token = strtok(NULL, ">");
+    }
+    arguments[i] = NULL; 
+    return arguments;
+}
+
+// Split the commands and text for pipes (|)
+char** SplitCommandsWithPipes(char* input) {
+    char** arguments = malloc(100 * sizeof(char*));
+    int i = 0;
+
+    if (!arguments) {
+        fprintf(stderr, "Memory allocation error\n");
+        exit(1);
+    }
+
+    char* token = strtok(input, "|");
+    while(token != NULL) {
+        arguments[i++] = token;
+        token = strtok(NULL, "|");
     }
     arguments[i] = NULL; 
     return arguments;

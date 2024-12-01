@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
 
     if (argc == 2) {
         //batch mode
-        printf("batch mode\n");
+        // printf("batch mode\n"); //debug
 
         FILE* file = fopen(argv[1], "r");
 
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 
     } else if (argc == 1) {
         //interactive
-        printf("interactive mode\n");
+        // printf("interactive mode\n"); //debug
         interactive();
     } else {
         //error
