@@ -34,45 +34,9 @@ int runCommands(char* command) {
     }
     
     char **commandArgs = splitCommandsInArguments(command);
-    char *path = (char *)malloc(100 * sizeof(char));
-    path[0] = '\0';
-    // char *s = (char *)malloc(100 * sizeof(char));
-    int i=1;
 
-    while(commandArgs[i] != NULL) {
-        strcat(path, commandArgs[i]);
-        strcat(path, " ");
-        i++;
-    }
-
-    // Remove the last space
-    if (strlen(path) > 0 && path[strlen(path) - 1] == ' ') {
-        path[strlen(path) - 1] = '\0';
-    }
-    // printf("path: %s\n", path); //debug
-
-    // CURRENT BUG: ".." only works sometimes?
     if (strcmp(command, "cd") == 0) {
-        // printf("cd\n"); //debug
-        // printf("old path: %s\n", getcwd(s, 100)); //100 should be the size of the buffer
-
-        // If no path is specified, go to the user's home directory
-        if (strcmp(path, "") == 0 || commandArgs[1] == NULL) {
-            chdir(getenv("HOME"));
-            // printf("new path: %s\n", getcwd(s, 100)); //debug
-            return -1;
-        } else {
-
-            if (chdir(path) == 0) { //change path
-                // printf("new path: %s\n", getcwd(s, 100)); //debug
-                free(path);
-                return -1;
-            } else {
-                printf("Error: invalid directory\n");
-                free(path);
-                return -1;
-            }
-        }
+        changeDirectory(commandArgs);
     } else if (strcmp(command, "exit") == 0) {
         // printf("exiting...\n"); //debug
         exit(1);
@@ -96,9 +60,7 @@ int runCommands(char* command) {
             wait((int *)0);
         }
     }
-    
-    // free(s);
-    free(path);
+    return 0;
 }
 
 // I/O Redirection

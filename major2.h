@@ -20,5 +20,6 @@ char **splitCommandsInArguments(char *input);
 char **SplitCommandsWithInputRedirection(char* input);
 char **SplitCommandsWithOutputRedirection(char* input);
 char **SplitCommandsWithPipes(char* input);
+int changeDirectory(char** command);
 
 #endif

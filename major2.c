@@ -3,10 +3,8 @@
 int main(int argc, char *argv[]) {
 
     char line[512];
-    int i = 0;
-    char *cmd[512];         
+    int i = 0;         
     char **commands;
-    char **arguments;
 
     if (argc == 2) {
         //batch mode

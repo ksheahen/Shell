@@ -2,7 +2,6 @@
 
 void interactive() {
     bool running = true;    //flag
-    char *cmd[512];         //linux commands
     char input[512];         //user input
     int i = 0;              //index
     char *cwd = (char *)malloc(100 * sizeof(char)); //cwd
@@ -26,8 +25,6 @@ void interactive() {
         }
 
         char **commands;
-        char **arguments;
-        int i = 0;
 
         // Seperate the commands entered by the user
         commands = splitCommandsInLine(input);
