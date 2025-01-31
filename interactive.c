@@ -6,6 +6,7 @@ void interactive() {
     int i = 0;              //index
     char *cwd = (char *)malloc(100 * sizeof(char)); //cwd
     char *user = getenv("USER");
+    char **commands;
 
     while (running) {
 
@@ -23,8 +24,6 @@ void interactive() {
             running = false; 
             break;
         }
-
-        char **commands;
 
         // Seperate the commands entered by the user
         commands = splitCommandsInLine(input);

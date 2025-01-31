@@ -2,6 +2,8 @@
 
 int runCommands(char* command) {
 
+    addToHistory(command);
+
     // flags
     int isInput = -1;
     int isOutput = -1;
@@ -32,18 +34,17 @@ int runCommands(char* command) {
             return 0;
         }
     }
-    
+
     char **commandArgs = splitCommandsInArguments(command);
 
     if (strcmp(command, "cd") == 0) {
         changeDirectory(commandArgs);
     } else if (strcmp(command, "exit") == 0) {
-        // printf("exiting...\n"); //debug
         exit(1);
     } else if (strcmp(command, "path") == 0) {
         printf("path");
     } else if (strcmp(command, "myhistory") == 0) {
-        printf("myhistory");
+        myCommandHistory(commandArgs);
     } else {
 
         if(fork() == 0) {

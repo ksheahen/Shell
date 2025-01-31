@@ -21,5 +21,7 @@ char **SplitCommandsWithInputRedirection(char* input);
 char **SplitCommandsWithOutputRedirection(char* input);
 char **SplitCommandsWithPipes(char* input);
 int changeDirectory(char** command);
+int addToHistory(char* command);
+int myCommandHistory(char** commandArgs);
 
 #endif
