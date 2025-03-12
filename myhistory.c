@@ -45,7 +45,7 @@ int myCommandHistory(char** commandArgs) {
 
     // Print the user's command history
     } else if (strcmp(args, "") == 0) {
-        printf("history print");
+        //printf("history print"); //debug
         for (int i = 0; i < counter; i++) {
             printf("%s\n", history[i]);
         }

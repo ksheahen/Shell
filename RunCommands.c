@@ -9,6 +9,11 @@ int runCommands(char* command) {
     int isOutput = -1;
     int isPipe = -1;
 
+    // Remove the last space from the command.
+    if (strlen(command) > 0 && command[0] == ' ') {
+        command[0] = '\0';
+    }
+
     if (strstr(command, "<") != NULL) {
         isInput = 1;
     } else if (strstr(command, ">") != NULL) {
@@ -35,6 +40,7 @@ int runCommands(char* command) {
         }
     }
 
+    // Split the command into its respective arguments.
     char **commandArgs = splitCommandsInArguments(command);
 
     if (strcmp(command, "cd") == 0) {
@@ -61,8 +67,17 @@ int runCommands(char* command) {
             wait((int *)0);
         }
     }
+
     return 0;
 }
+
+// Remove leading spaces from a string
+void removeLeadingSpace(char* str) {
+    if (strlen(str) > 0 && str[0] == ' ') {
+        memmove(str, str + 1, strlen(str));
+    }
+}
+
 
 // I/O Redirection
 int redirection(char* command, int isInputRedirection, int isOutputRedirection) {
@@ -80,8 +95,17 @@ int redirection(char* command, int isInputRedirection, int isOutputRedirection) 
     if (isInputRedirection == 1) {
 
         redirectionArguments = SplitCommandsWithInputRedirection(command);
+        for (int i = 0; redirectionArguments[i] != NULL; i++) {
+            removeLeadingSpace(redirectionArguments[i]);
+        }
         ifp = open(redirectionArguments[1], O_RDONLY);
 
+        // Check for error opening the file
+        if (ifp == -1) {
+            perror("Error opening file");
+            return -1;
+        }
+        
         dup2(ifp, STDIN_FILENO);
         close(ifp);
 
@@ -109,7 +133,16 @@ int redirection(char* command, int isInputRedirection, int isOutputRedirection) 
     if (isOutputRedirection == 1) {
 
         redirectionArguments = SplitCommandsWithOutputRedirection(command);
+        for (int i = 0; redirectionArguments[i] != NULL; i++) {
+            removeLeadingSpace(redirectionArguments[i]);
+        }
+
         ofp = open(redirectionArguments[1], O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+
+        // Check for error opening the file
+        if (ofp == -1) {
+            return -1;
+        }
 
         dup2(ofp, STDOUT_FILENO);
         close(ofp);
