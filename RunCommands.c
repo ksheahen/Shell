@@ -51,6 +51,17 @@ int runCommands(char* command) {
         printf("path");
     } else if (strcmp(command, "myhistory") == 0) {
         myCommandHistory(commandArgs);
+    } else if (strcmp(command, "kill") == 0) {
+        // Convert the singal and pid to integers.
+        int signalInt = atoi(commandArgs[1]);
+        int pidInt = atoi(commandArgs[2]);
+
+        // Send the singal to the process group.
+        if (killpg(pidInt, signalInt) != -1) {
+            printf("Signal sent to process group\n");
+        } else {
+            printf("Error sending signal to process group\n");
+        }
     } else {
 
         if(fork() == 0) {
