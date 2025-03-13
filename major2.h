@@ -11,6 +11,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <signal.h>
+#include <ctype.h>
 
 void interactive();
 int runCommands(char* command);
@@ -24,5 +25,6 @@ char **SplitCommandsWithPipes(char* input);
 int changeDirectory(char** command);
 int addToHistory(char* command);
 int myCommandHistory(char** commandArgs);
+int color(char** commandArgs);
 
 #endif
