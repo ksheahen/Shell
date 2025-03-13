@@ -1,5 +1,7 @@
 #include "major2.h"
 
+int colorID;
+
 int runCommands(char* command) {
 
     addToHistory(command);
@@ -62,6 +64,8 @@ int runCommands(char* command) {
         } else {
             printf("Error sending signal to process group\n");
         }
+    } else if (strcmp(command, "color") == 0) {
+        colorID = color(commandArgs);
     } else {
 
         if(fork() == 0) {
