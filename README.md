@@ -1,6 +1,6 @@
 ﻿# Shell Project
 
-For my CSCE 3600 class, I developed a shell in C that replicates core shell functionalities. This shell supports interactive command execution as well as reading commands from batch files. It parses user input, allowing for proper command execution for commands with (or without) I/O redirection and/or piping. It also supports a couple of built-in command functions (e.g. cd, exit).
+I developed a shell in C that replicates core shell functionalities. This shell supports interactive command execution as well as reading commands from batch files. It parses user input, allowing for proper command execution for commands with (or without) I/O redirection and/or piping. It also supports a couple of built-in command functions (e.g. cd, exit).
 
 ## Features
 
@@ -35,3 +35,4 @@ For my CSCE 3600 class, I developed a shell in C that replicates core shell func
 - ~Piping and redirection has outdated code and is broken. Needs to be updated to working state.~ Fixed on 03/12/2025
 - myhistory is uncapped.
 - Limited color options and no case sensitivty support.
+
